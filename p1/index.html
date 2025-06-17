@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <form id="signupForm">
+      <h2>Sign Up</h2>
+
+      <label for="suName">Username</label>
+      <input id="suName" required />
+
+      <label for="suPass">Password</label>
+      <input id="suPass" type="password" required />
+
+      <button type="submit">Create Account</button>
+      <p class="msg" id="suMsg"></p>
+      <p class="toggle">
+        Already have an account? <a href="login.html">Log in</a>
+      </p>
+    </form>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
