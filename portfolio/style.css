@@ -55,9 +55,9 @@
     }
 
     button {
-      background-color: teal;
+      background-color: rgb(204, 252, 147);
       padding: 10px;
-      color: white;
+      color: rgb(64, 40, 222);
       border: none;
       border-radius: 10%;
     }
