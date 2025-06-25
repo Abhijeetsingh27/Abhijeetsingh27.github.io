@@ -19,9 +19,9 @@
 //     console.log("hello world");
 // });
 
-let f1=(x) {
+let f1 = (x) => {
     console.log(x);
-
 };
-const main =
-console.log(()=>f1(5));
+
+const main = () => f1(5);
+main(); 
