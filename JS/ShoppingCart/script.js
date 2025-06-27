@@ -1,79 +1,67 @@
-let cart={};
-const products=[
-    {
-        id: 1,name:"Product 1",price:100
-    },
-    {
-        id: 2,name:"Product 2",price:200
-    },
-    {
-        id: 3,name:"Product 3",price:300
-    },
-    {
-        id: 4,name:"Product 4",price :400
-    },
-]
-const showProducts=()=>{
-    let str=" ";
-    products.map((value)=>{
-        str+=`${value.id}-${value.name}-${value.price}\n`;
-    });
-   console.log("**Product List**");
-   console.log(str);
-}
-showProducts();
+let cart = {};
+const products = [
+  { id: 1, name: "Product 1", price: 100 },
+  { id: 2, name: "Product 2", price: 200 },
+  { id: 3, name: "Product 3", price: 300 },
+  { id: 4, name: "Product 4", price: 400 },
+];
 
-const addToCart=(id)=>{
-    cart={...cart,[id]:1};
-  
+const productListDiv = document.getElementById("product-list");
+const cartListDiv = document.getElementById("cart-list");
+const orderValueEl = document.getElementById("order-value");
+
+const showProducts = () => {
+  productListDiv.innerHTML = "";
+  products.forEach((product) => {
+    const div = document.createElement("div");
+    div.className = "product";
+    div.innerHTML = `
+      ${product.name} - ₹${product.price}
+      <button onclick="addToCart(${product.id})">Add to Cart</button>
+    `;
+    productListDiv.appendChild(div);
+  });
 };
-addToCart(1);
-addToCart(3);
-addToCart(4);
 
-
-
-
-const showCart=()=>{
-    let str=" ";
-    products.map(value=>{
-        if(cart[value.id]>0){
-       
-        str+=`${value.name}-${value.price}-${cart[value.id]*value.price}\n`
-
+const showCart = () => {
+  cartListDiv.innerHTML = "";
+  products.forEach((product) => {
+    const qty = cart[product.id] || 0;
+    if (qty > 0) {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        ${product.name} - ₹${product.price} × ${qty} = ₹${qty * product.price}
+        <div>
+          <button onclick="decrement(${product.id})">-</button>
+          <button onclick="increment(${product.id})">+</button>
+        </div>
+      `;
+      cartListDiv.appendChild(div);
     }
-});
-    console.log("**MY Cart**");
-    console.log(str);
-   
-    
+  });
+  const total = products.reduce((sum, p) => sum + (cart[p.id] || 0) * p.price, 0);
+  orderValueEl.innerText = `Your total order value = ₹${total}`;
 };
-showCart();
 
-
-
-
-const increment=(id)=>{
-    cart={...cart,[id]:(cart[id] ||0)+1};
+const addToCart = (id) => {
+  cart = { ...cart, [id]: 1 };
+  showCart();
 };
-increment(1);
-console.log("Product added");
-showCart();
 
-
-const decrement=(id)=>{
-    cart={...cart,[id]:cart[id]-1};
+const increment = (id) => {
+  cart = { ...cart, [id]: (cart[id] || 0) + 1 };
+  showCart();
 };
-decrement(1);
-console.log("Product removed");
 
+const decrement = (id) => {
+  if (cart[id] > 1) {
+    cart = { ...cart, [id]: cart[id] - 1 };
+  } else {
+    delete cart[id];
+  }
+  showCart();
+};
+
+showProducts();
 showCart();
-
-
-const showordervalue=products.reduce((sum,value)=>{
-    return sum+value.price*(cart[value.id]??0);
-    },0);
-    console.log(`Your total order value = ${showordervalue}`);
-
-
-
